@@ -7,16 +7,12 @@ import { FaUserCircle } from "react-icons/fa";
 import door from "../images/door.jfif";
 
 import { withRouter } from "react-router-dom";
-// import { useDispatch } from "react-redux";
-// import { register } from "../_actions/userAction";
 
 const Register = (props) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
-
-  // const dispatch = useDispatch();
 
   const _handleChange = (e) => {
     const { name } = e.target;
@@ -57,24 +53,6 @@ const Register = (props) => {
     }
   };
 
-  // const _handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   if (password === passwordConfirm) {
-  //     let body = {
-  //       name: name,
-  //       email: email,
-  //       password: password,
-  //     };
-
-  //     dispatch(register(body)).then((res) => {
-  //       alert("Your subscription has been completed successfully.");
-  //       props.history.push("/login");
-  //     });
-  //   } else {
-  //     alert("Password does not match.");
-  //   }
-  // };
-
   return (
     <div className="login">
       <div className="login-box">
@@ -82,7 +60,6 @@ const Register = (props) => {
         <section className="login-form">
           <h1>register</h1>
           <form>
-            {/* onSubmit={_handleSubmit}  */}
             <label htmlFor="">Name</label>
             <div>
               <FaUserCircle />

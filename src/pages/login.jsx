@@ -6,10 +6,11 @@ import { MdEmail, MdLock } from "react-icons/md";
 import { withRouter } from "react-router-dom";
 import door from "../images/door.jfif";
 
+Axios.defaults.withCredentials = true;
+
 const Login = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loginStatus, setLoginStatus] = useState("");
 
   const _login = () => {
     if (email !== "" && password !== "") {
@@ -18,15 +19,16 @@ const Login = (props) => {
         password: password,
       }).then((response) => {
         if (response.data.loginSuccess === false) {
-          console.log(response.data);
-          alert("false");
+          // console.log(response.data);
+          alert("Login failed.");
         } else {
-          console.log(response.data.result[0].name);
-          alert("true");
+          // console.log(response.data);
+          //id, name , email, password 존재
+          alert("You have successfully logged in.");
+          props.history.push("/");
+          window.location.reload();
         }
       });
-      alert("You have successfully logged in.");
-      props.history.push("/");
     } else {
       alert("Fill in all the blanks, please.");
     }

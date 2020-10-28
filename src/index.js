@@ -4,23 +4,10 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter as Router } from "react-router-dom";
 
-import { Provider } from "react-redux";
-import { applyMiddleware, createStore } from "redux";
-import promiseMiddleware from "redux-promise";
-import reduxThunk from "redux-thunk";
-import reducer from "./_reducers";
-
-const createStoreWithMiddleware = applyMiddleware(
-  promiseMiddleware,
-  reduxThunk
-)(createStore);
-
 ReactDOM.render(
-  <Provider store={createStoreWithMiddleware(reducer)}>
-    <Router>
-      <App />
-    </Router>
-  </Provider>,
+  <Router>
+    <App />
+  </Router>,
   document.getElementById("root")
 );
 
