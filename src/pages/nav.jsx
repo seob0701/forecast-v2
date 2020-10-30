@@ -12,7 +12,7 @@ const Nav = () => {
 
   const _logout = () => {
     Axios.get("http://localhost:3001/logout").then((response) => {
-      console.log(response.data);
+      // console.log(response.data);
     });
 
     window.location.reload();
@@ -23,14 +23,14 @@ const Nav = () => {
       if (response.data.user) {
         setUserInfo(response.data.user);
       }
-      console.log(response.data.user);
+      // console.log(response.data.user);
       setLoggedStatus(response.data.loggedIn);
     });
   };
 
   useEffect(() => {
     _login();
-    console.log(userInfo);
+    // console.log(userInfo);
   }, []);
 
   return (

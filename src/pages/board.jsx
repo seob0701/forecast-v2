@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import Axios from "axios";
 import "../scss/board.scss";
 
 const test_contents = [
@@ -23,6 +24,19 @@ const test_contents = [
 ];
 
 const Board = () => {
+  const [loggedStatus, setLoggedStatus] = useState(false);
+
+  const _login = () => {
+    Axios.get("http://localhost:3001/login").then((response) => {
+      setLoggedStatus(response.data.loggedIn);
+    });
+  };
+
+  useEffect(() => {
+    _login();
+    // console.log(userInfo);
+  }, []);
+
   return (
     <div className="board">
       <div className="board-box">
@@ -54,7 +68,11 @@ const Board = () => {
       </div>
       <div className="write-btn">
         <button>
-          <a href="/write">Writing</a>
+          {loggedStatus ? (
+            <a href="/write">Writing</a>
+          ) : (
+            <a href="/login">Writing</a>
+          )}
         </button>
       </div>
     </div>
