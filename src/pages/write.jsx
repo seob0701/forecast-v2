@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import Axios from "axios";
 import "../scss/write.scss";
 
-const Write = () => {
-  const [userName, setUserName] = useState("");
-  const [userEmail, setUserEmail] = useState("");
+import { withRouter } from "react-router-dom";
+
+const Write = (props) => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [date, setDate] = useState("");
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
@@ -12,18 +14,25 @@ const Write = () => {
   const _login = () => {
     Axios.get("http://localhost:3001/login").then((response) => {
       if (response.data.user) {
-        setUserName(response.data.user[0].name);
-        setUserEmail(response.data.user[0].email);
+        setName(response.data.user[0].name);
+        setEmail(response.data.user[0].email);
       }
       // console.log(response.data.user);
     });
   };
 
   const _save = () => {
-    //작성한 글의 제목, 내용, 작성자, 시간 정보를 DB에 저장한다.
-
     if (title !== "" && desc !== "") {
-      console.log(userName, userEmail, date, title, desc);
+      Axios.post("http://localhost:3001/write", {
+        name: name,
+        email: email,
+        title: title,
+        desc: desc,
+      }).then((response) => {
+        console.log(response);
+      });
+      alert("It has been saved.");
+      // props.history.push("/board");
     } else {
       alert("Fill in all the blanks, please.");
     }
@@ -43,7 +52,6 @@ const Write = () => {
     _login();
     let currentDate = new Date();
     currentDate = getFormatDate(currentDate);
-
     setDate(currentDate); //날짜저장
 
     // console.log(userInfo);
@@ -84,4 +92,4 @@ const Write = () => {
   );
 };
 
-export default Write;
+export default withRouter(Write);

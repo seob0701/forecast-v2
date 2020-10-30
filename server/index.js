@@ -34,7 +34,7 @@ app.use(
 );
 
 // parse application/json
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
 
 const db = mysql.createConnection({
   user: "root",
@@ -49,6 +49,22 @@ app.get("/logout", (req, res) => {
 
   res.redirect("/");
   //Hmm...
+});
+
+app.post("/write", (req, res) => {
+  const name = req.body.name;
+  const email = req.body.email;
+  const title = req.body.title;
+  const desc = req.body.desc;
+  // const date = req.body.date;
+
+  db.query(
+    "INSERT INTO board (name, email, title, desc) VALUES (?,?,?,?)",
+    [name, email, title, desc],
+    (err, result) => {
+      console.log(err);
+    }
+  );
 });
 
 app.post("/register", (req, res) => {

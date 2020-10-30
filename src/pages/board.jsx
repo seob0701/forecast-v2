@@ -68,11 +68,7 @@ const Board = () => {
       </div>
       <div className="write-btn">
         <button>
-          {loggedStatus ? (
-            <a href="/write">Writing</a>
-          ) : (
-            <a href="/login">Writing</a>
-          )}
+          <a href="/write">Writing</a>
         </button>
       </div>
     </div>
