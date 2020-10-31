@@ -2,39 +2,22 @@ import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import "../scss/board.scss";
 
-const test_contents = [
-  {
-    num: "1",
-    title: "오늘 뭐하냐 공부 이거 만들고 회원가입까지",
-    id: "shimyuseob",
-    date: "2020-10-26",
-  },
-  {
-    num: "2",
-    title: "너무 힘들다 만들기도 귀찮고",
-    id: "jypark1111",
-    date: "2020-10-26",
-  },
-  {
-    num: "3",
-    title: "오늘은 이것만 하고 자야지!!",
-    id: "test",
-    date: "2020-10-26",
-  },
-];
-
 const Board = () => {
-  const [loggedStatus, setLoggedStatus] = useState(false);
+  const [lists, setLists] = useState([]);
 
-  const _login = () => {
-    Axios.get("http://localhost:3001/login").then((response) => {
-      setLoggedStatus(response.data.loggedIn);
+  const _lists = () => {
+    Axios.post("http://localhost:3001/lists").then((response) => {
+      setLists(response.data);
+      //데이터 뿌려주려면 배열에 저장 해줘야 함.
     });
   };
 
+  const _handleClick = (ele) => {
+    console.log(ele);
+  };
+
   useEffect(() => {
-    _login();
-    // console.log(userInfo);
+    _lists();
   }, []);
 
   return (
@@ -46,19 +29,23 @@ const Board = () => {
             <tr>
               <th scope="cols">#</th>
               <th scope="cols">Title</th>
-              <th scope="cols">ID</th>
+              <th scope="cols">Name</th>
               <th scope="cols">Date</th>
             </tr>
           </thead>
           <tbody>
-            {test_contents.map((ele, key) => {
+            {lists.map((ele, index) => {
               return (
-                <tr key={key}>
-                  <th scope="row">{ele.num}</th>
+                <tr
+                  key={ele.id}
+                  onClick={() => _handleClick(ele)}
+                  style={{ cursor: "pointer" }}
+                >
+                  <th scope="row">{index}</th>
                   <td>
                     <p>{ele.title}</p>
                   </td>
-                  <th>{ele.id}</th>
+                  <th>{ele.name}</th>
                   <th>{ele.date}</th>
                 </tr>
               );

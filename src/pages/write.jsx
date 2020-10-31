@@ -28,11 +28,12 @@ const Write = (props) => {
         email: email,
         title: title,
         desc: desc,
+        date: date,
       }).then((response) => {
         console.log(response);
       });
       alert("It has been saved.");
-      // props.history.push("/board");
+      props.history.push("/board");
     } else {
       alert("Fill in all the blanks, please.");
     }
