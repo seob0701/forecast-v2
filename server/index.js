@@ -86,6 +86,13 @@ app.post("/register", (req, res) => {
   });
 });
 
+// app.post("/view", (req, res) => {
+//   const email = req.body.email;
+//   const title = req.body.title;
+//   const description = req.body.description;
+//   res.send({ email: email, title: title, description: description });
+// });
+
 app.post("/login", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;

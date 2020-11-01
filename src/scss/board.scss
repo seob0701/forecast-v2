@@ -37,6 +37,13 @@ $desktop: "Only screen and (min-width : 768px)";
         }
         tbody {
           tr {
+            &:hover {
+              cursor: pointer;
+              background-color: #276cf5;
+              color: white;
+              font-weight: bold;
+              transition: all 0.3s ease-in-out;
+            }
             th {
               width: 150px;
               padding: 20px;

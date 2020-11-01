@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import "../scss/board.scss";
 
-const Board = () => {
+import { withRouter } from "react-router-dom";
+
+const Board = (props) => {
   const [lists, setLists] = useState([]);
 
   const _lists = () => {
@@ -13,7 +15,7 @@ const Board = () => {
   };
 
   const _handleClick = (ele) => {
-    console.log(ele);
+    window.location.href = `/view/${ele.id}`;
   };
 
   useEffect(() => {
@@ -36,11 +38,7 @@ const Board = () => {
           <tbody>
             {lists.map((ele, index) => {
               return (
-                <tr
-                  key={ele.id}
-                  onClick={() => _handleClick(ele)}
-                  style={{ cursor: "pointer" }}
-                >
+                <tr key={ele.id} onClick={() => _handleClick(ele)}>
                   <th scope="row">{index}</th>
                   <td>
                     <p>{ele.title}</p>
@@ -62,4 +60,4 @@ const Board = () => {
   );
 };
 
-export default Board;
+export default withRouter(Board);
