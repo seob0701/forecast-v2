@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
 import "../scss/write.scss";
+import { withRouter } from "react-router-dom";
 
-const View = () => {
+const View = (props) => {
   const [data, setData] = useState({
     id: "",
     name: "",
@@ -13,6 +14,18 @@ const View = () => {
   });
 
   const [userInfo, setUserInfo] = useState([{ email: "" }]);
+
+  const _handleChange = (e) => {
+    if (data.email === userInfo[0].email) {
+      const { name, value } = e.target;
+
+      if (name === "title") {
+        setData({ ...data, title: value });
+      } else if (name === "desc") {
+        setData({ ...data, description: value });
+      }
+    }
+  };
 
   const _login = () => {
     Axios.get("http://localhost:3001/login").then((response) => {
@@ -51,14 +64,34 @@ const View = () => {
   }, []);
 
   // console.log(array);
-  console.log(data.email);
+  console.log(data.title);
   console.log(userInfo[0].email);
 
-  const _delete = () => {}; //db에서 삭제
-  const _edit = () => {}; //db에서 수정
+  const _delete = () => {
+    if (data.email === userInfo[0].email) {
+      Axios.post("http://localhost:3001/delete", {
+        id: data.id,
+      }).then((response) => {
+        console.log(response);
+      });
+      alert("The post has been deleted.");
+      props.history.push("/board");
+    }
+  }; //db에서 삭제
 
-  const _handleChange = (e) => {};
-  //왜 안될까...?
+  const _edit = () => {
+    if (data.email === userInfo[0].email) {
+      Axios.post("http://localhost:3001/modify", {
+        id: data.id,
+        title: data.title,
+        description: data.description,
+      }).then((response) => {
+        console.log(response);
+      });
+      alert("The post has been modified.");
+      props.history.push("/board");
+    }
+  }; //db에서 삭제
 
   return (
     <div className="board">
@@ -80,7 +113,7 @@ const View = () => {
           name="title"
           type="text"
           onChange={_handleChange}
-          defaultValue={data.title}
+          value={data.title}
           style={{ fontWeight: "bold" }}
         />
         <label htmlFor="">Description</label>
@@ -109,4 +142,4 @@ const View = () => {
   );
 };
 
-export default View;
+export default withRouter(View);

@@ -86,12 +86,35 @@ app.post("/register", (req, res) => {
   });
 });
 
-// app.post("/view", (req, res) => {
-//   const email = req.body.email;
-//   const title = req.body.title;
-//   const description = req.body.description;
-//   res.send({ email: email, title: title, description: description });
-// });
+// DELETE FROM `forecast`.`lists` WHERE (`id` = '6');
+
+app.post("/delete", (req, res) => {
+  const id = req.body.id;
+
+  db.query("DELETE FROM lists WHERE id = ?;", id, (err, result) => {
+    if (err) {
+      console.log(err);
+    }
+  });
+});
+
+// UPDATE `forecast`.`lists` SET `title` = '게시물 DB수정 중 입니다.' WHERE (`id` = '8');
+
+app.post("/modify", (req, res) => {
+  const id = req.body.id;
+  const title = req.body.title;
+  const description = req.body.description;
+
+  db.query(
+    "UPDATE lists SET title = ?, description = ? WHERE id = ?;",
+    [title, description, id],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      }
+    }
+  );
+});
 
 app.post("/login", (req, res) => {
   const email = req.body.email;

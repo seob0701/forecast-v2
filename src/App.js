@@ -1,6 +1,6 @@
 import "./App.css";
 import { Switch, Route } from "react-router-dom";
-import { Nav, About, Board, Login, Register, Home, Write ,View, Mypage, Error} from "./pages/index";
+import { Nav, About, Board, Login, Register, Home, Write ,View, Error} from "./pages/index";
 import { useEffect, useState } from "react";
 import Axios from "axios";
 
@@ -50,7 +50,6 @@ function App() {
         <Route path="/view" component={View} />
         {/* <Route path="/write" component={Write} /> */}
         <RouteIf path="/write" exact component={Write} role={loggedStatus} />
-        <RouteIf path="/mypage" exact component={Mypage} role={loggedStatus} />
         <Route component={Error} />
       </Switch>
     </div>
