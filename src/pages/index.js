@@ -6,4 +6,6 @@ export { default as Register } from "./register";
 export { default as Home } from "./home";
 export { default as Write } from "./write";
 export { default as View } from "./view";
+export { default as Mypage } from "./mypage";
+export { default as Error } from "./error";
 

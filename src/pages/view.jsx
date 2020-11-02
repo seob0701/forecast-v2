@@ -3,11 +3,26 @@ import Axios from "axios";
 import "../scss/write.scss";
 
 const View = () => {
-  // const [lists, setLists] = useState([]);
-  // const [array, setArray] = useState("");
-  const [data, setData] = useState([
-    { id: "", name: "", email: "", title: "", description: "", date: "" },
-  ]);
+  const [data, setData] = useState({
+    id: "",
+    name: "",
+    email: "",
+    title: "",
+    description: "",
+    date: "",
+  });
+
+  const [userInfo, setUserInfo] = useState([{ email: "" }]);
+
+  const _login = () => {
+    Axios.get("http://localhost:3001/login").then((response) => {
+      if (response.data.user) {
+        setUserInfo(response.data.user);
+      }
+      // console.log(response.data.user);
+      // setLoggedStatus(response.data.loggedIn);
+    });
+  };
 
   const _lists = () => {
     // console.log(window.location.pathname.split("/")[2]);
@@ -29,15 +44,21 @@ const View = () => {
   useEffect(() => {
     // console.log(window.location.pathname.split("/")[2]);
     // setArray();
+
+    _login();
     _lists();
     console.log("useEffect");
   }, []);
 
   // console.log(array);
-  console.log(data);
-  // console.log(data);
+  console.log(data.email);
+  console.log(userInfo[0].email);
 
-  const _delete = () => {};
+  const _delete = () => {}; //db에서 삭제
+  const _edit = () => {}; //db에서 수정
+
+  const _handleChange = (e) => {};
+  //왜 안될까...?
 
   return (
     <div className="board">
@@ -52,12 +73,14 @@ const View = () => {
           type="text"
           value={`Writer: ${data.name}   Email: ${data.email}   Date: ${data.date}`}
           style={{ fontWeight: "bold" }}
+          readOnly
         />
         <label htmlFor="">Title</label>
         <input
           name="title"
           type="text"
-          value={data.title}
+          onChange={_handleChange}
+          defaultValue={data.title}
           style={{ fontWeight: "bold" }}
         />
         <label htmlFor="">Description</label>
@@ -65,15 +88,23 @@ const View = () => {
       <textarea
         className="text-box"
         name="desc"
-        id=""
         value={data.description}
+        onChange={_handleChange}
         style={{ fontWeight: "bold" }}
       ></textarea>
-      <div className="write-btn">
-        <button>
-          <a onClick={_delete}>Delete</a>
-        </button>
-      </div>
+
+      {data.email === userInfo[0].email ? (
+        <div className="write-btn">
+          <button style={{ backgroundColor: "#276CF5", margin: "0px 10px" }}>
+            <a onClick={_edit}>Edit</a>
+          </button>
+          <button style={{ backgroundColor: "red", margin: "0px 10px" }}>
+            <a onClick={_delete}>Delete</a>
+          </button>
+        </div>
+      ) : (
+        <div className="write-btn"></div>
+      )}
     </div>
   );
 };

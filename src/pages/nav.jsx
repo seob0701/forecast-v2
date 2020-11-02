@@ -51,6 +51,11 @@ const Nav = () => {
                 </li>
               );
             })}
+            {loggedStatus && (
+              <li>
+                <a href="/mypage">My Page</a>
+              </li>
+            )}
             <li>
               <a href="/about">About</a>
             </li>
