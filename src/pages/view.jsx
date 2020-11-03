@@ -69,13 +69,17 @@ const View = (props) => {
 
   const _delete = () => {
     if (data.email === userInfo[0].email) {
-      Axios.post("http://localhost:3001/delete", {
-        id: data.id,
-      }).then((response) => {
-        console.log(response);
-      });
-      alert("The post has been deleted.");
-      props.history.push("/board");
+      if (window.confirm("Are you sure you want to delete the post?")) {
+        Axios.post("http://localhost:3001/delete", {
+          id: data.id,
+        }).then((response) => {
+          console.log(response);
+        });
+        window.alert("The post has been deleted.");
+        props.history.push("/board");
+      } else {
+        window.alert("Cancel the deletion.");
+      }
     }
   }; //db에서 삭제
 

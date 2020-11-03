@@ -6,6 +6,10 @@ import { withRouter } from "react-router-dom";
 
 const Board = (props) => {
   const [lists, setLists] = useState([]);
+  const [pages, setPages] = useState([]);
+
+  // const [limit, setLimit] = useState(0);
+  const [count, setCount] = useState(5);
 
   const _lists = () => {
     Axios.post("http://localhost:3001/lists").then((response) => {
@@ -18,9 +22,36 @@ const Board = (props) => {
     window.location.href = `/view/${ele.id}`;
   };
 
+  const _pageClick = (num) => {
+    let page = num * 5;
+    // console.log(page);
+    // console.log(count);
+
+    Axios.post("http://localhost:3001/page", {
+      page: page,
+      count: count,
+    }).then((response) => {
+      console.log(response);
+      setPages(response.data);
+    });
+    // setLimit(page);
+
+    // console.log(limit);
+  };
+
   useEffect(() => {
     _lists();
+
+    Axios.post("http://localhost:3001/page", {
+      page: 0,
+      count: count,
+    }).then((response) => {
+      console.log(response);
+      setPages(response.data);
+    });
   }, []);
+
+  console.log(lists);
 
   return (
     <div className="board">
@@ -36,7 +67,7 @@ const Board = (props) => {
             </tr>
           </thead>
           <tbody>
-            {lists.map((ele, index) => {
+            {pages.map((ele, index) => {
               return (
                 <tr key={ele.id} onClick={() => _handleClick(ele)}>
                   <th scope="row">{index}</th>
@@ -50,6 +81,17 @@ const Board = (props) => {
             })}
           </tbody>
         </table>
+      </div>
+      <div className="page-count">
+        {lists.map((ele, key) => {
+          if (key % 5 === 0) {
+            return (
+              <button key={key} onClick={() => _pageClick(key / 5)}>
+                {key / 5}
+              </button>
+            );
+          }
+        })}
       </div>
       <div className="write-btn">
         <button>

@@ -116,6 +116,19 @@ app.post("/modify", (req, res) => {
   );
 });
 
+app.post("/page", (req, res) => {
+  const page = req.body.page;
+  const count = req.body.count;
+
+  db.query("SELECT * FROM lists LIMIT ?,?;", [page, count], (err, result) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+
 app.post("/login", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
