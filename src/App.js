@@ -42,7 +42,7 @@ function App() {
     <div className="App">
       <Nav />
       <Switch>
-        <Route exact path="/" component={Home} />
+      <RouteIf path="/" exact component={Home} role={loggedStatus} />
         <Route path="/about" component={About} />
         <Route path="/board" component={Board} />
         <Route path="/login" component={Login} />

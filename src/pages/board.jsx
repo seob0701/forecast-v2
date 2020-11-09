@@ -31,7 +31,7 @@ const Board = (props) => {
       page: page,
       count: count,
     }).then((response) => {
-      console.log(response);
+      // console.log(response);
       setPages(response.data);
     });
     // setLimit(page);
@@ -46,12 +46,15 @@ const Board = (props) => {
       page: 0,
       count: count,
     }).then((response) => {
-      console.log(response);
+      // console.log(response);
+      let currentData = response.data;
+
       setPages(response.data);
     });
   }, []);
 
-  console.log(lists);
+  // console.log(lists);
+  console.log(pages);
 
   return (
     <div className="board">
