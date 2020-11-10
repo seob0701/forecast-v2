@@ -1,32 +1,58 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../scss/home.scss";
-import farm from "../images/farm.jfif";
 import Calc from "../components/calc";
 
+import { RenderAfterNavermapsLoaded, NaverMap } from "react-naver-maps";
+
+const naverId = "i1cv4r4vt2";
+const naverPw = "FbpAsDoF78HMmkbTlyx4GkUiN0fhZHwi2UDsWJAt";
+
 const Home = () => {
+  const [geoLocation, setGeoLocation] = useState({
+    y: 37.554722,
+    _lat: 37.554722,
+    x: 126.970833,
+    _lng: 126.970833,
+  });
+
+  function NaverMapAPI() {
+    return (
+      <NaverMap
+        mapDivId={"maps-getting-started-uncontrolled"} // default: react-naver-map
+        defaultCenter={{ lat: geoLocation.y, lng: geoLocation.x }} // 지도 초기 위치
+        defaultZoom={13} // 지도 초기 확대 배율
+        onClick={_handleClick}
+      />
+    );
+  }
+
+  const _handleClick = (e) => {
+    // console.log(e.coord);
+    setGeoLocation(e.coord);
+  };
+
+  // useEffect(() => {}, [geoLocation]);
+
+  // console.log(geoLocation);
+
   return (
     <div className="home">
       <div className="home-box">
         <div className="cabbage-box">
-          <div>
-            <img src={farm} alt="" />
-            <section className="container">
-              <h1 className="title">
-                <span>Hi, nice</span>
-                <span>to see</span>
-                <span>you here</span>
-              </h1>
-
-              <h2 className="title">
-                <span>This is the</span>
-                <span>cabbage price</span>
-                <span>prediction website</span>
-              </h2>
-            </section>
+          <div id="map">
+            <div>
+              <RenderAfterNavermapsLoaded
+                ncpClientId={naverId}
+                error={<p>Maps Load Error</p>}
+                loading={<p>Maps Loading...</p>}
+              >
+                <NaverMapAPI />
+              </RenderAfterNavermapsLoaded>
+            </div>
           </div>
 
           <div className="calc">
-            <Calc />
+            <Calc geoLocation={geoLocation} />
           </div>
         </div>
       </div>

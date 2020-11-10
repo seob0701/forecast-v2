@@ -67,6 +67,7 @@ $desktop: "Only screen and (min-width : 768px)";
         padding: 5px;
         border: none;
         background-color: #405943;
+        outline: none;
       }
     }
 
@@ -151,6 +152,18 @@ $desktop: "Only screen and (min-width : 768px)";
         }
       }
     }
+
+    .page-count {
+      button {
+        margin: 0px 5px;
+        color: white;
+        padding: 5px;
+        border: none;
+        background-color: #405943;
+        outline: none;
+      }
+    }
+
     .write-btn {
       display: flex;
       justify-content: flex-end;
